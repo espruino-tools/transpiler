@@ -1,0 +1,56 @@
+{
+  "name": "@espruino-tools/transpiler",
+  "version": "0.0.3",
+  "description": "A small transpiler tool to convert custom espruino-tools code into native espruino code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espruino-tools/transpiler.git"
+  },
+  "keywords": [
+    "typescript",
+    "espruino"
+  ],
+  "author": "callum mcluskey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/espruino-tools/transpiler/issues"
+  },
+  "homepage": "https://github.com/espruino-tools/transpiler#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "husky": "^8.0.0",
+    "standard-version": "^9.5.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint --env HUSKY_GIT_PARAMS"
+    }
+  },
+  "standard-version": {
+    "skip": {
+      "commit": true
+    },
+    "commitlint": {
+      "extends": [
+        "@commitlint/config-conventional"
+      ],
+      "rules": {
+        "subject-case": [
+          2,
+          "never",
+          [
+            "start-case",
+            "pascal-case"
+          ]
+        ]
+      }
+    }
+  }
+}
