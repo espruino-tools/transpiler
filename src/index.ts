@@ -9,4 +9,6 @@
 
 import { transpile } from './transpile';
 
+import * as esprima from 'esprima';
+
 export default transpile;
