@@ -2,6 +2,7 @@ import { parseModule, parseScript } from 'esprima';
 import { generator } from './generator';
 import { transpile_options } from './types/transpile';
 import { default_transpile_options } from './defaults/transpile_default';
+import { transformer } from './transformer';
 
 /**
  * This file collates the parser returns the generated code.
@@ -15,7 +16,8 @@ export const transpile = (
 
   let ast =
     options.parse_type == 'script' ? parseScript(code) : parseModule(code);
-  let out = generator(ast, {
+  let transformed_ast = transformer(ast, options);
+  let out = generator(transformed_ast, {
     object_name: options.object_name,
     additional_callees: options.additional_callees,
   });

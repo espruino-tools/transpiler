@@ -1,6 +1,6 @@
 {
   "name": "@espruino-tools/transpiler",
-  "version": "0.0.12",
+  "version": "0.0.16",
   "description": "A small transpiler tool to convert custom espruino-tools code into native espruino code.",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
+    "@types/escodegen": "^0.0.7",
     "@types/esprima": "^4.0.3",
     "@types/jest": "^29.2.5",
     "husky": "^8.0.0",
@@ -72,6 +73,7 @@
     }
   },
   "dependencies": {
+    "escodegen": "^2.0.0",
     "esprima": "^4.0.1"
   }
 }

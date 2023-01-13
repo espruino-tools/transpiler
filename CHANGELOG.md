@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/espruino-tools/transpiler/compare/v0.0.15...v0.0.16) (2023-01-13)
+
+### [0.0.15](https://github.com/espruino-tools/transpiler/compare/v0.0.14...v0.0.15) (2023-01-13)
+
+### [0.0.14](https://github.com/espruino-tools/transpiler/compare/v0.0.13...v0.0.14) (2023-01-13)
+
+### [0.0.13](https://github.com/espruino-tools/transpiler/compare/v0.0.12...v0.0.13) (2023-01-11)
+
+
+### Bug Fixes
+
+* added some skeleton for the generator and transpiler ([a2a09c3](https://github.com/espruino-tools/transpiler/commit/a2a09c3f7fcc33867a576fc974fa9275b87573b5))
+
 ### [0.0.12](https://github.com/espruino-tools/transpiler/compare/v0.0.11...v0.0.12) (2023-01-10)
 
 
