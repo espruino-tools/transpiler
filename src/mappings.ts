@@ -11,8 +11,12 @@ export const mappings = {
       enableField: () => `require("puckjsv2-mag-level").on()`,
       disableMag: () => `Puck.magOff()`,
       disableField: () => `require("puckjsv2-mag-level").off()`,
-      onMag: '',
-      onField: '',
+      onMag: (func: any) => `Puck.on('mag', function(){
+        ${func}
+      })`,
+      onField: (func: any) => `Puck.on('field', function(){
+        ${func}
+      })`,
     },
     accel: {
       enableAccelMovement: () => `require("puckjsv2-accel-movement").on()`,
@@ -24,8 +28,12 @@ export const mappings = {
         `require("puckjsv2-accel-bigmovement").off()`,
       disableAccelTilt: () => `require("puckjsv2-accel-tilt").off()`,
       val: () => 'Puck.accel()',
-      onMove: '',
-      onTilt: '',
+      onMove: (func: any) => `Puck.on('accel', function(acc){
+        ${func}
+      })`,
+      onTilt: (func: any) => `Puck.on('accel', function(acc){
+        ${func}
+      })`,
     },
     IR: {
       transmit: (data: number[]) => `Puck.IR([${data.join(',')}])`,
@@ -51,9 +59,21 @@ export const mappings = {
             ${func}
         }, BTN, {edge:"rising", repeat:true, debounce:50})`;
     },
-    onTimedPress: '',
-    getTemperature: 'E.getTemperature()',
-    getLightVal: 'Puck.light()',
+    onTimedPress: (
+      long: any,
+      short: any,
+      ms: number = 0.3,
+    ) => `setWatch(function(){
+      var ms = (e.time - e.lastTime);
+
+      if(ms > ${ms}){
+        ${long}
+      } else {
+        ${short}
+      }
+    }, BTN, {edge:'falling', repeat:true, debounce:50})`,
+    getTemperature: () => 'E.getTemperature()',
+    getLightVal: () => 'Puck.light()',
   },
   DeviceController: {
     connect: () => `0`,
@@ -61,7 +81,6 @@ export const mappings = {
     dump: () => `E.dumpStr()`,
     getDeviceType: () => `process.env.BOARD`,
     getBattery: () => `E.getBattery()`,
-    Call: {},
     Pin: {
       val: (pin: string) => `${pin}.read()`,
       analogOn: (pin: string, val: number) => `analogWrite(${pin},${val})`,
