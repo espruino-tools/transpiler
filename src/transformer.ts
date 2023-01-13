@@ -1,6 +1,9 @@
 import { mappings } from './mappings';
 import { generator_options } from './types/generator';
 import * as esprima from 'esprima';
+import { generator } from './generator';
+import * as escodegen from 'escodegen';
+
 /**
  * This will replace code in AST pre-rebuilding
  * @param ast
@@ -12,7 +15,9 @@ export const transformer = (ast: any, options: generator_options) => {
     'Pixl',
     'Bangle',
     'DeviceController',
-    ...options.additional_callees,
+    ...(options.additional_initialisers
+      ? (options.additional_initialisers as string[])
+      : []),
   ];
   const getInstanceInitialising = (ast: any): string[] => {
     let variable_declarations = ast.body.filter(
@@ -22,10 +27,14 @@ export const transformer = (ast: any, options: generator_options) => {
       callee_names.includes(x.declarations[0].init.callee?.name),
     );
 
-    return esp_inititalising_vars.map((x: any) => ({
-      name: x.declarations[0].id.name,
-      initialiser: x.declarations[0].init.callee.name,
-    }));
+    let callees = [
+      ...esp_inititalising_vars.map((x: any) => ({
+        name: x.declarations[0].id.name,
+        initialiser: x.declarations[0].init.callee.name,
+      })),
+      ...(options.additional_callees as any[]),
+    ];
+    return callees;
   };
 
   const convertToAST = (code: string, params: any[]) => {
@@ -40,9 +49,11 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const replaceExpression = (x: any) => {
     let esp_initialising_vars = getInstanceInitialising(ast);
-
     let device_variable: string;
 
+    if (x.expression.type === 'AssignmentExpression') {
+      return x;
+    }
     if (x.expression.callee.object.type === 'MemberExpression') {
       device_variable = x.expression.callee.object.object.name;
     } else if (x.expression.callee.object.type === 'Identifier') {
@@ -68,10 +79,24 @@ export const transformer = (ast: any, options: generator_options) => {
           x.expression.callee.object.property?.name + '.';
       }
 
-      let params: any[] = x.expression.arguments.map((x: any) => x.value);
+      let params: any[] = x.expression.arguments.map((x: any) => {
+        if (x.hasOwnProperty('value')) {
+          return x.value;
+        } else {
+          let transformer_out = transformer(x.body, {
+            additional_callees: getInstanceInitialising(ast),
+          });
+
+          return generator(transformer_out, {
+            additional_callees: [],
+          });
+        }
+      });
 
       phrase += x.expression.callee.property.name;
-      return convertToAST(phrase, params);
+
+      let ast_res = convertToAST(phrase, params);
+      return ast_res;
     }
   };
 
@@ -98,15 +123,37 @@ export const transformer = (ast: any, options: generator_options) => {
     return val;
   };
 
+  const replaceIfExpressions = (x: any) => {
+    let x_copy = { ...x };
+
+    if (x_copy.type === 'BlockStatement') {
+      x_copy.body = x_copy.body.map((y: any) => replaceExpression(y));
+    }
+    if (x_copy.type === 'IfStatement') {
+      return replaceIfStatement(x_copy);
+    }
+    return x_copy;
+  };
+
+  const replaceIfStatement = (x: any) => {
+    let if_copy = { ...x };
+
+    if_copy.consequent = replaceIfExpressions(x.consequent);
+    if_copy.alternate = replaceIfExpressions(x.alternate);
+    return if_copy;
+  };
+
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
 
     ast_copy.body = ast.body
-      .map((x: any) =>
-        x.type === 'ExpressionStatement'
+      .map((x: any) => {
+        return x.type === 'ExpressionStatement'
           ? replaceExpression(x)
-          : removeInitsAndImports(x),
-      )
+          : x.type === 'IfStatement'
+          ? replaceIfStatement(x)
+          : removeInitsAndImports(x);
+      })
       .filter((x: any) => x !== '');
 
     return ast_copy;

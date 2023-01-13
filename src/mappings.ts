@@ -46,7 +46,11 @@ export const mappings = {
       val: (color: LEDColoursType) =>
         `digitalRead(LED${LEDColours.indexOf(color) + 1}) == 1`,
     },
-    onPress: '',
+    onPress: (func: any) => {
+      return `setWatch(function(){
+            ${func}
+        }, BTN, {edge:"rising", repeat:true, debounce:50})`;
+    },
     onTimedPress: '',
     getTemperature: 'E.getTemperature()',
     getLightVal: 'Puck.light()',
