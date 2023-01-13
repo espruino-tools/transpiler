@@ -13,14 +13,16 @@ export const transpile = (
   options: transpile_options = default_transpile_options,
 ) => {
   options = { ...default_transpile_options, ...options };
-
-  let ast =
-    options.parse_type == 'script' ? parseScript(code) : parseModule(code);
-  let transformed_ast = transformer(ast, options);
-  let out = generator(transformed_ast, {
-    object_name: options.object_name,
-    additional_callees: options.additional_callees,
-  });
-
-  return out;
+  try {
+    let ast =
+      options.parse_type == 'script' ? parseScript(code) : parseModule(code);
+    let transformed_ast = transformer(ast, options);
+    let out = generator(transformed_ast, {
+      object_name: options.object_name,
+      additional_callees: options.additional_callees,
+    });
+    return out;
+  } catch (err) {
+    throw err;
+  }
 };

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.22](https://github.com/espruino-tools/transpiler/compare/v0.0.21...v0.0.22) (2023-01-13)
+
+
+### Bug Fixes
+
+* added missing function param methods ([90e0053](https://github.com/espruino-tools/transpiler/commit/90e0053a2e35696105d55bc5bce155270f183fb6))
+
 ### [0.0.21](https://github.com/espruino-tools/transpiler/compare/v0.0.20...v0.0.21) (2023-01-13)
 
 
