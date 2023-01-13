@@ -17,9 +17,13 @@ p.onPress(function(){
     p.LED.on('red');
 });`;
 
-    let expected_code = `setWatch(function(){
+    let expected_code = `setWatch(function () {
     LED1.set();
-})`;
+}, BTN, {
+    edge: 'rising',
+    repeat: true,
+    debounce: 50
+});`;
 
     expect(transpile(code)).toBe(expected_code);
   });
