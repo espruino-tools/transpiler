@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/espruino-tools/transpiler/compare/v0.0.18...v0.0.19) (2023-01-13)
+
+
+### Features
+
+* added if statement workability ([5542f95](https://github.com/espruino-tools/transpiler/commit/5542f951113127d939d367e7a43a30c5be0fa813))
+
+### [0.0.18](https://github.com/espruino-tools/transpiler/compare/v0.0.17...v0.0.18) (2023-01-13)
+
+
+### Bug Fixes
+
+* added types to package.json ([0a7941b](https://github.com/espruino-tools/transpiler/commit/0a7941b9d008b24ed5161b4bc50265868694b5c8))
+
 ### [0.0.17](https://github.com/espruino-tools/transpiler/compare/v0.0.16...v0.0.17) (2023-01-13)
 
 

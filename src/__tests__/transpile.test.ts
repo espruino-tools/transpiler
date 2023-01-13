@@ -9,4 +9,18 @@ p.LED.on('red');`;
 
     expect(transpile(code)).toBe(expected_code);
   });
+
+  it('Should work with functions as parameters', () => {
+    let code = `import { Puck } from '@espruino-tools/core';
+let p = new Puck();
+p.onPress(function(){
+    p.LED.on('red');
+});`;
+
+    let expected_code = `setWatch(function(){
+    LED1.set();
+})`;
+
+    expect(transpile(code)).toBe(expected_code);
+  });
 });
