@@ -2,7 +2,6 @@ import { mappings } from './mappings';
 import { generator_options } from './types/generator';
 import * as esprima from 'esprima';
 import { generator } from './generator';
-import * as escodegen from 'escodegen';
 
 /**
  * This will replace code in AST pre-rebuilding
