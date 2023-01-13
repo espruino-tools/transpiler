@@ -1,8 +1,9 @@
 {
   "name": "@espruino-tools/transpiler",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "A small transpiler tool to convert custom espruino-tools code into native espruino code.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "start": "npm run build && node lib/index.js",
     "build": "tsc",

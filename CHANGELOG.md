@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/espruino-tools/transpiler/compare/v0.0.16...v0.0.17) (2023-01-13)
+
+
+### Features
+
+* added basic working shell for transpiler,  doesnt work on methods w/ func passed as params ([e2b5f4b](https://github.com/espruino-tools/transpiler/commit/e2b5f4b145b6b9bd11db97e397f0454493062a89))
+
 ### [0.0.16](https://github.com/espruino-tools/transpiler/compare/v0.0.15...v0.0.16) (2023-01-13)
 
 ### [0.0.15](https://github.com/espruino-tools/transpiler/compare/v0.0.14...v0.0.15) (2023-01-13)
