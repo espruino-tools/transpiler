@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.24](https://github.com/espruino-tools/transpiler/compare/v0.0.23...v0.0.24) (2023-01-14)
+
+
+### Bug Fixes
+
+* added capability for loops and switch statements ([18217d0](https://github.com/espruino-tools/transpiler/commit/18217d066311b248b38a6778999bd2e1b5fdf334))
+
 ### [0.0.23](https://github.com/espruino-tools/transpiler/compare/v0.0.22...v0.0.23) (2023-01-14)
 
 

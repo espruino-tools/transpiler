@@ -145,6 +145,7 @@ export const transformer = (ast: any, options: generator_options) => {
     }
     return if_copy;
   };
+
   const replaceLoopStatement = (x: any) => {
     let loop_copy = { ...x };
     loop_copy.body.body = loop_copy.body.body.map((y: any) =>
@@ -166,7 +167,7 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
-
+    console.log(ast);
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
@@ -177,7 +178,9 @@ export const transformer = (ast: any, options: generator_options) => {
             return replaceIfStatement(x);
           }
           case 'WhileStatement':
-          case 'ForStatement': {
+          case 'ForStatement':
+          case 'ForInStatement':
+          case 'DoWhileStatement': {
             return replaceLoopStatement(x);
           }
           case 'SwitchStatement':
