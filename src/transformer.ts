@@ -117,6 +117,8 @@ export const transformer = (ast: any, options: generator_options) => {
         }
         break;
       }
+      default:
+        return ast;
     }
 
     return val;
@@ -138,8 +140,28 @@ export const transformer = (ast: any, options: generator_options) => {
     let if_copy = { ...x };
 
     if_copy.consequent = replaceIfExpressions(x.consequent);
-    if_copy.alternate = replaceIfExpressions(x.alternate);
+    if (if_copy.alternate) {
+      if_copy.alternate = replaceIfExpressions(x.alternate);
+    }
     return if_copy;
+  };
+  const replaceLoopStatement = (x: any) => {
+    let loop_copy = { ...x };
+    loop_copy.body.body = loop_copy.body.body.map((y: any) =>
+      replaceExpression(y),
+    );
+    return loop_copy;
+  };
+
+  const replaceSwitchStatement = (x: any) => {
+    let switch_copy = { ...x };
+
+    switch_copy.cases = switch_copy.cases.map(
+      (y: any) =>
+        (y.consequent = y.consequent.map((z: any) => replaceExpression(z))),
+    );
+
+    return x;
   };
 
   const getExpressions = (ast: any): any => {
@@ -147,11 +169,24 @@ export const transformer = (ast: any, options: generator_options) => {
 
     ast_copy.body = ast.body
       .map((x: any) => {
-        return x.type === 'ExpressionStatement'
-          ? replaceExpression(x)
-          : x.type === 'IfStatement'
-          ? replaceIfStatement(x)
-          : removeInitsAndImports(x);
+        switch (x.type) {
+          case 'ExpressionStatement': {
+            return replaceExpression(x);
+          }
+          case 'IfStatement': {
+            return replaceIfStatement(x);
+          }
+          case 'WhileStatement':
+          case 'ForStatement': {
+            return replaceLoopStatement(x);
+          }
+          case 'SwitchStatement':
+            return replaceSwitchStatement(x);
+
+          default: {
+            return removeInitsAndImports(x);
+          }
+        }
       })
       .filter((x: any) => x !== '');
 
