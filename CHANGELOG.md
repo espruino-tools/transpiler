@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.25](https://github.com/espruino-tools/transpiler/compare/v0.0.24...v0.0.25) (2023-01-14)
+
+
+### Bug Fixes
+
+* added do while and for in statements ([5621008](https://github.com/espruino-tools/transpiler/commit/562100868dc9a319985d5847b7dac8caf0607937))
+
 ### [0.0.24](https://github.com/espruino-tools/transpiler/compare/v0.0.23...v0.0.24) (2023-01-14)
 
 

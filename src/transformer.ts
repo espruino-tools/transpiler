@@ -46,9 +46,54 @@ export const transformer = (ast: any, options: generator_options) => {
     return esprima.parseScript(expression_func(...params)).body[0];
   };
 
+  const replaceReturnedExpression = (x: any) => {
+    let esp_initialising_vars = getInstanceInitialising(ast);
+    let device_variable: string = x.callee.object.object.name;
+
+    let device_init: any = esp_initialising_vars.find(
+      (x: any) => x.name === device_variable,
+    );
+
+    let phrase = device_init.initialiser + '.';
+
+    if (x.callee.object.property?.name) {
+      phrase +=
+        x.callee.object.property?.name && x.callee.object.property?.name + '.';
+    }
+
+    let params: any[] = x.arguments.map((y: any) => {
+      if (y.hasOwnProperty('value')) {
+        return y.value;
+      } else {
+        let transformer_out = transformer(x.body, {
+          additional_callees: getInstanceInitialising(ast),
+        });
+
+        return generator(transformer_out, {
+          additional_callees: [],
+        });
+      }
+    });
+
+    phrase += x.callee.property.name;
+
+    let ast_res = convertToAST(phrase, params);
+    return ast_res;
+  };
+
   const replaceExpression = (x: any) => {
     let esp_initialising_vars = getInstanceInitialising(ast);
     let device_variable: string;
+
+    if (x.expression.type === 'ConditionalExpression') {
+      x.expression.consequent = replaceReturnedExpression(
+        x.expression.consequent,
+      );
+      x.expression.alternate = replaceReturnedExpression(
+        x.expression.alternate,
+      );
+      return x;
+    }
 
     if (x.expression.type === 'AssignmentExpression') {
       return x;
@@ -64,6 +109,19 @@ export const transformer = (ast: any, options: generator_options) => {
     if (
       !esp_initialising_vars.map((x: any) => x.name).includes(device_variable)
     ) {
+      if (x.expression.arguments instanceof Array) {
+        x.expression.arguments = x.expression.arguments.map((y: any) => {
+          if (y.hasOwnProperty('value')) {
+            return y.value;
+          } else {
+            if (y.body.hasOwnProperty('body')) {
+              y.body.body = y.body.body.map((z: any) => replaceExpression(z));
+            }
+            return y;
+          }
+        });
+      }
+
       return x;
     } else {
       let device_init: any = esp_initialising_vars.find(
@@ -165,9 +223,20 @@ export const transformer = (ast: any, options: generator_options) => {
     return x;
   };
 
+  const replaceClass = (x: any) => {
+    let class_copy = { ...x };
+
+    class_copy.body.body = class_copy.body.body.map((y: any) => {
+      y.value = replaceLoopStatement(y.value);
+      return y;
+    });
+
+    return class_copy;
+  };
+
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
-    console.log(ast);
+
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
@@ -177,6 +246,10 @@ export const transformer = (ast: any, options: generator_options) => {
           case 'IfStatement': {
             return replaceIfStatement(x);
           }
+          case 'ClassDeclaration':
+            return replaceClass(x);
+
+          case 'FunctionDeclaration':
           case 'WhileStatement':
           case 'ForStatement':
           case 'ForInStatement':
