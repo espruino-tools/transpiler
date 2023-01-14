@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.25](https://github.com/espruino-tools/transpiler/compare/v0.0.24...v0.0.25) (2023-01-14)
+
+
+### Bug Fixes
+
+* added do while and for in statements ([5621008](https://github.com/espruino-tools/transpiler/commit/562100868dc9a319985d5847b7dac8caf0607937))
+
+### [0.0.24](https://github.com/espruino-tools/transpiler/compare/v0.0.23...v0.0.24) (2023-01-14)
+
+
+### Bug Fixes
+
+* added capability for loops and switch statements ([18217d0](https://github.com/espruino-tools/transpiler/commit/18217d066311b248b38a6778999bd2e1b5fdf334))
+
+### [0.0.23](https://github.com/espruino-tools/transpiler/compare/v0.0.22...v0.0.23) (2023-01-14)
+
+
+### Bug Fixes
+
+* fixed mag issue ([63165a6](https://github.com/espruino-tools/transpiler/commit/63165a64f8e179d06344381b9454662921682f11))
+
 ### [0.0.22](https://github.com/espruino-tools/transpiler/compare/v0.0.21...v0.0.22) (2023-01-13)
 
 
