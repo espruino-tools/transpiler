@@ -1,3 +1,4 @@
 node_modules
 lib
 min
+src/functionality_test.ts

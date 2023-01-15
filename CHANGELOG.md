@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.30](https://github.com/espruino-tools/transpiler/compare/v0.0.29...v0.0.30) (2023-01-15)
+
+
+### Bug Fixes
+
+* fixed function as variable declaration for normal functions ([d7d6b8d](https://github.com/espruino-tools/transpiler/commit/d7d6b8da2d8d7ddc59e891f6127224f984fdc6c4))
+
+### [0.0.29](https://github.com/espruino-tools/transpiler/compare/v0.0.28...v0.0.29) (2023-01-15)
+
+### [0.0.28](https://github.com/espruino-tools/transpiler/compare/v0.0.27...v0.0.28) (2023-01-15)
+
+
+### Bug Fixes
+
+* added capability for objects to have esp in them ([892ce09](https://github.com/espruino-tools/transpiler/commit/892ce096ec6c5cfa18dcefa62efc4140295e54e9))
+
+### [0.0.27](https://github.com/espruino-tools/transpiler/compare/v0.0.26...v0.0.27) (2023-01-15)
+
+
+### Bug Fixes
+
+* updated readme ([4837a0d](https://github.com/espruino-tools/transpiler/commit/4837a0daead59b756ba4d7f586b294ffd567f53c))
+
 ### [0.0.26](https://github.com/espruino-tools/transpiler/compare/v0.0.25...v0.0.26) (2023-01-14)
 
 

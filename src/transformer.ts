@@ -157,15 +157,33 @@ export const transformer = (ast: any, options: generator_options) => {
     }
   };
 
-  const removeInitsAndImports = (ast: any) => {
+  const removeInitsAndImports = (ast: any): any => {
     let val;
-
     switch (ast.type) {
       case 'ImportDeclaration': {
         val = ast.source.value.includes('espruino-tools') ? '' : ast;
         break;
       }
       case 'VariableDeclaration': {
+        if (ast.declarations[0].init?.type === 'FunctionExpression') {
+          ast.declarations[0].init.body.body =
+            ast.declarations[0].init.body.body.map((x: any) =>
+              replaceExpression(x),
+            );
+        }
+
+        if (ast.declarations[0].init?.type === 'ObjectExpression') {
+          ast.declarations[0].init.properties =
+            ast.declarations[0].init.properties.map((x: any) => {
+              if (x.value.type === 'FunctionExpression') {
+                x.value = replaceLoopStatement(x.value);
+              } else {
+                x.value = replaceReturnedExpression(x.value);
+              }
+              return x;
+            });
+        }
+
         if (ast.declarations[0].init.hasOwnProperty('callee')) {
           val = callee_names.includes(ast.declarations[0].init.callee?.name)
             ? ''
@@ -236,7 +254,6 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
-
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
@@ -248,7 +265,6 @@ export const transformer = (ast: any, options: generator_options) => {
           }
           case 'ClassDeclaration':
             return replaceClass(x);
-
           case 'FunctionDeclaration':
           case 'WhileStatement':
           case 'ForStatement':
