@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.30](https://github.com/espruino-tools/transpiler/compare/v0.0.29...v0.0.30) (2023-01-15)
+
+
+### Bug Fixes
+
+* fixed function as variable declaration for normal functions ([d7d6b8d](https://github.com/espruino-tools/transpiler/commit/d7d6b8da2d8d7ddc59e891f6127224f984fdc6c4))
+
 ### [0.0.29](https://github.com/espruino-tools/transpiler/compare/v0.0.28...v0.0.29) (2023-01-15)
 
 ### [0.0.28](https://github.com/espruino-tools/transpiler/compare/v0.0.27...v0.0.28) (2023-01-15)
