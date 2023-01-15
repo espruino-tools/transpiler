@@ -81,9 +81,19 @@ export const transformer = (ast: any, options: generator_options) => {
     return ast_res;
   };
 
-  const replaceExpression = (x: any) => {
+  const replaceExpression = (x: any): any => {
     let esp_initialising_vars = getInstanceInitialising(ast);
     let device_variable: string;
+
+    if (x?.type === 'ReturnStatement') {
+      if (x.argument.type === 'Literal') {
+        return x;
+      }
+
+      x.argument = replaceReturnedExpression(x.argument);
+
+      return x;
+    }
 
     if (x.expression.type === 'ConditionalExpression') {
       x.expression.consequent = replaceReturnedExpression(
@@ -165,7 +175,6 @@ export const transformer = (ast: any, options: generator_options) => {
         break;
       }
       case 'VariableDeclaration': {
-        console.log(ast.declarations);
         if (ast.declarations[0].init?.type === 'FunctionExpression') {
           ast.declarations[0].init.body.body =
             ast.declarations[0].init.body.body.map((x: any) =>
@@ -181,7 +190,7 @@ export const transformer = (ast: any, options: generator_options) => {
                 x.value.type === 'ArrowFunctionExpression'
               ) {
                 x.value = replaceLoopStatement(x.value);
-              } else {
+              } else if (x.value.type === 'CallExpression') {
                 x.value = replaceReturnedExpression(x.value);
               }
               return x;
@@ -189,10 +198,16 @@ export const transformer = (ast: any, options: generator_options) => {
         }
 
         if (ast.declarations[0].init?.type === 'ArrowFunctionExpression') {
-          ast.declarations[0].init.body.body =
-            ast.declarations[0].init.body.body.map((x: any) =>
-              replaceExpression(x),
+          if (ast.declarations[0].init.body.body instanceof Array) {
+            ast.declarations[0].init.body.body =
+              ast.declarations[0].init.body.body.map((x: any) =>
+                replaceExpression(x),
+              );
+          } else {
+            ast.declarations[0].init.body = replaceReturnedExpression(
+              ast.declarations[0].init.body,
             );
+          }
         }
 
         if (ast.declarations[0].init.hasOwnProperty('callee')) {
@@ -235,7 +250,6 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const replaceLoopStatement = (x: any) => {
     let loop_copy = { ...x };
-
     loop_copy.body.body = loop_copy.body.body.map((y: any) =>
       replaceExpression(y),
     );
