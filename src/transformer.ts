@@ -166,6 +166,15 @@ export const transformer = (ast: any, options: generator_options) => {
         break;
       }
       case 'VariableDeclaration': {
+        if (ast.declarations[0].init?.type === 'ObjectExpression') {
+          ast.declarations[0].init.properties =
+            ast.declarations[0].init.properties.map((x: any) => {
+              x.value = replaceReturnedExpression(x.value);
+              return x;
+            });
+          console.log(ast.declarations[0].init);
+        }
+
         if (ast.declarations[0].init.hasOwnProperty('callee')) {
           val = callee_names.includes(ast.declarations[0].init.callee?.name)
             ? ''
@@ -236,7 +245,7 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
-
+    console.log(ast.body[2]);
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
@@ -248,7 +257,6 @@ export const transformer = (ast: any, options: generator_options) => {
           }
           case 'ClassDeclaration':
             return replaceClass(x);
-
           case 'FunctionDeclaration':
           case 'WhileStatement':
           case 'ForStatement':

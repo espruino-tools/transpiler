@@ -1,11 +1,11 @@
 {
   "name": "@espruino-tools/transpiler",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "A small transpiler tool to convert custom espruino-tools code into native espruino code.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "start": "npm run build && node lib/index.js",
+    "start:test_func": "npm run build && node lib/functionality_test.js",
     "build": "tsc",
     "build:min": "webpack",
     "test": "jest --config jest.json --silent --maxWorkers 1",
