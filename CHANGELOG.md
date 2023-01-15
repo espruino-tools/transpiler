@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.31](https://github.com/espruino-tools/transpiler/compare/v0.0.30...v0.0.31) (2023-01-15)
+
+
+### Bug Fixes
+
+* added ability to do let x = function(){} ([79413e5](https://github.com/espruino-tools/transpiler/commit/79413e57d82b29d55e1b673a50155f6226262546))
+
 ### [0.0.30](https://github.com/espruino-tools/transpiler/compare/v0.0.29...v0.0.30) (2023-01-15)
 
 
