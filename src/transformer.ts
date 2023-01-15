@@ -157,7 +157,7 @@ export const transformer = (ast: any, options: generator_options) => {
     }
   };
 
-  const removeInitsAndImports = (ast: any) => {
+  const removeInitsAndImports = (ast: any): any => {
     let val;
 
     switch (ast.type) {
@@ -167,9 +167,15 @@ export const transformer = (ast: any, options: generator_options) => {
       }
       case 'VariableDeclaration': {
         if (ast.declarations[0].init?.type === 'ObjectExpression') {
+          console.log(ast.declarations[0].init.properties[0]);
+
           ast.declarations[0].init.properties =
             ast.declarations[0].init.properties.map((x: any) => {
-              x.value = replaceReturnedExpression(x.value);
+              if (x.value.type === 'FunctionExpression') {
+                x.value = replaceLoopStatement(x.value);
+              } else {
+                x.value = replaceReturnedExpression(x.value);
+              }
               return x;
             });
           console.log(ast.declarations[0].init);
