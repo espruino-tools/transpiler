@@ -2,6 +2,7 @@ import { mappings } from './mappings';
 import { generator_options } from './types/generator';
 import * as esprima from 'esprima';
 import { generator } from './generator';
+import { check } from 'prettier';
 
 /**
  * This will replace code in AST pre-rebuilding
@@ -93,8 +94,47 @@ export const transformer = (ast: any, options: generator_options) => {
     let esp_initialising_vars = getInstanceInitialising(ast);
     let device_variable: string;
 
-    if (x?.type === 'IfStatement') {
-      return replaceIfExpressions(x);
+    console.log(x);
+
+    switch (x?.type) {
+      case 'IfStatement': {
+        return replaceIfStatement(x);
+      }
+      case 'ClassDeclaration':
+        return replaceClass(x);
+      case 'FunctionDeclaration':
+      case 'WhileStatement':
+      case 'ForStatement':
+      case 'ForInStatement':
+      case 'DoWhileStatement': {
+        return replaceLoopStatement(x);
+      }
+      case 'SwitchStatement':
+        return replaceSwitchStatement(x);
+    }
+
+    if (x?.type === 'VariableDeclaration') {
+      if (x.declarations[0].init?.type === 'FunctionExpression') {
+        x.declarations[0].init.body.body = x.declarations[0].init.body.body.map(
+          (y: any) => replaceExpression(y),
+        );
+      }
+      if (x.declarations[0].init?.type === 'ObjectExpression') {
+        x.declarations[0].init.properties =
+          x.declarations[0].init.properties.map((y: any) => {
+            if (y.value.type === 'FunctionExpression') {
+              y.value = replaceLoopStatement(y.value);
+            } else if (y.value.type === 'CallExpression') {
+              console.log(y.value);
+              y.value = replaceReturnedExpression(y.value);
+            } else if (x.value.type === 'ArrowFunctionExpression') {
+              y.value.body = replaceReturnedExpression(y.value.body);
+            }
+            return y;
+          });
+
+        return x;
+      }
     }
 
     if (x?.type === 'ReturnStatement') {
@@ -288,6 +328,31 @@ export const transformer = (ast: any, options: generator_options) => {
     });
 
     return class_copy;
+  };
+
+  const checkExpression = (x: any) => {
+    switch (x.type) {
+      case 'ExpressionStatement': {
+        return replaceExpression(x);
+      }
+      case 'IfStatement': {
+        return replaceIfStatement(x);
+      }
+      case 'ClassDeclaration':
+        return replaceClass(x);
+      case 'FunctionDeclaration':
+      case 'WhileStatement':
+      case 'ForStatement':
+      case 'ForInStatement':
+      case 'DoWhileStatement': {
+        return replaceLoopStatement(x);
+      }
+      case 'SwitchStatement':
+        return replaceSwitchStatement(x);
+      default: {
+        return removeInitsAndImports(x);
+      }
+    }
   };
 
   const getExpressions = (ast: any): any => {
