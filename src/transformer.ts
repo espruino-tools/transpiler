@@ -105,6 +105,8 @@ export const transformer = (ast: any, options: generator_options) => {
       }
       case 'SwitchStatement':
         return replaceSwitchStatement(x);
+      case 'ContinueStatement':
+        return x;
     }
 
     if (x?.type === 'VariableDeclaration') {
@@ -354,6 +356,8 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
+
+    console.log(ast.body[2].body);
 
     ast_copy.body = ast.body
       .map((x: any) => {
