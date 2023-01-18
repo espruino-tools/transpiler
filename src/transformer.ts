@@ -93,6 +93,10 @@ export const transformer = (ast: any, options: generator_options) => {
     let esp_initialising_vars = getInstanceInitialising(ast);
     let device_variable: string;
 
+    if (x?.type === 'IfStatement') {
+      return replaceIfExpressions(x);
+    }
+
     if (x?.type === 'ReturnStatement') {
       if (x.argument.type === 'Literal') {
         return x;

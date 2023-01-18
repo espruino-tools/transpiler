@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.35](https://github.com/espruino-tools/transpiler/compare/v0.0.34...v0.0.35) (2023-01-18)
+
+### [0.0.34](https://github.com/espruino-tools/transpiler/compare/v0.0.33...v0.0.34) (2023-01-18)
+
+
+### Bug Fixes
+
+* fixed arrow notation in object ([8e1a8f7](https://github.com/espruino-tools/transpiler/commit/8e1a8f7263d624af74f0f52a437212e0292d058e))
+
 ### [0.0.33](https://github.com/espruino-tools/transpiler/compare/v0.0.32...v0.0.33) (2023-01-18)
 
 
