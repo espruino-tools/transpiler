@@ -342,16 +342,27 @@ export const transformer = (ast: any, options: generator_options) => {
     return class_copy;
   };
 
+  const replaceTryCatch = (x: any) => {
+    x.block.body = x.block.body.map((y: any) => {
+      return replaceExpression(y);
+    });
+    x.handler.body.body = x.handler.body.body.map((y: any) => {
+      return replaceExpression(y);
+    });
+    return x;
+  };
+
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
-
-    console.log(ast.body[3].body.body[0].declarations[0].init);
 
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
           case 'ExpressionStatement': {
             return replaceExpression(x);
+          }
+          case 'TryStatement': {
+            return replaceTryCatch(x);
           }
           case 'IfStatement': {
             return replaceIfStatement(x);
