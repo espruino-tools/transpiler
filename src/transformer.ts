@@ -94,8 +94,6 @@ export const transformer = (ast: any, options: generator_options) => {
     let esp_initialising_vars = getInstanceInitialising(ast);
     let device_variable: string;
 
-    console.log(x);
-
     switch (x?.type) {
       case 'IfStatement': {
         return replaceIfStatement(x);
@@ -125,7 +123,6 @@ export const transformer = (ast: any, options: generator_options) => {
             if (y.value.type === 'FunctionExpression') {
               y.value = replaceLoopStatement(y.value);
             } else if (y.value.type === 'CallExpression') {
-              console.log(y.value);
               y.value = replaceReturnedExpression(y.value);
             } else if (x.value.type === 'ArrowFunctionExpression') {
               y.value.body = replaceReturnedExpression(y.value.body);
@@ -147,7 +144,17 @@ export const transformer = (ast: any, options: generator_options) => {
       return x;
     }
 
-    if (x.expression.type === 'ConditionalExpression') {
+    if (x?.expression.type === 'LogicalExpression') {
+      if (x.expression.right.type !== 'Literal') {
+        x.expression.right = replaceReturnedExpression(x.expression.right);
+      }
+      if (x.expression.left.type !== 'Literal') {
+        x.expression.left = replaceReturnedExpression(x.expression.left);
+      }
+      return x;
+    }
+
+    if (x?.expression.type === 'ConditionalExpression') {
       x.expression.consequent = replaceReturnedExpression(
         x.expression.consequent,
       );
@@ -157,12 +164,13 @@ export const transformer = (ast: any, options: generator_options) => {
       return x;
     }
 
-    if (x.expression.type === 'AssignmentExpression') {
+    if (x?.expression.type === 'AssignmentExpression') {
       return x;
     }
-    if (x.expression.callee.object.type === 'MemberExpression') {
+
+    if (x?.expression.callee.object.type === 'MemberExpression') {
       device_variable = x.expression.callee.object.object.name;
-    } else if (x.expression.callee.object.type === 'Identifier') {
+    } else if (x?.expression.callee.object.type === 'Identifier') {
       device_variable = x.expression.callee.object.name;
     } else {
       device_variable = '';
@@ -171,7 +179,7 @@ export const transformer = (ast: any, options: generator_options) => {
     if (
       !esp_initialising_vars.map((x: any) => x.name).includes(device_variable)
     ) {
-      if (x.expression.arguments instanceof Array) {
+      if (x?.expression.arguments instanceof Array) {
         x.expression.arguments = x.expression.arguments.map((y: any) => {
           if (y.hasOwnProperty('value')) {
             return y.value;
@@ -240,7 +248,6 @@ export const transformer = (ast: any, options: generator_options) => {
               if (x.value.type === 'FunctionExpression') {
                 x.value = replaceLoopStatement(x.value);
               } else if (x.value.type === 'CallExpression') {
-                console.log(x.value);
                 x.value = replaceReturnedExpression(x.value);
               } else if (x.value.type === 'ArrowFunctionExpression') {
                 x.value.body = replaceReturnedExpression(x.value.body);
@@ -328,31 +335,6 @@ export const transformer = (ast: any, options: generator_options) => {
     });
 
     return class_copy;
-  };
-
-  const checkExpression = (x: any) => {
-    switch (x.type) {
-      case 'ExpressionStatement': {
-        return replaceExpression(x);
-      }
-      case 'IfStatement': {
-        return replaceIfStatement(x);
-      }
-      case 'ClassDeclaration':
-        return replaceClass(x);
-      case 'FunctionDeclaration':
-      case 'WhileStatement':
-      case 'ForStatement':
-      case 'ForInStatement':
-      case 'DoWhileStatement': {
-        return replaceLoopStatement(x);
-      }
-      case 'SwitchStatement':
-        return replaceSwitchStatement(x);
-      default: {
-        return removeInitsAndImports(x);
-      }
-    }
   };
 
   const getExpressions = (ast: any): any => {
