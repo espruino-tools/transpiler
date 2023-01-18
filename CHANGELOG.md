@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.39](https://github.com/espruino-tools/transpiler/compare/v0.0.38...v0.0.39) (2023-01-18)
+
+
+### Bug Fixes
+
+* added case for this ([ac2ef66](https://github.com/espruino-tools/transpiler/commit/ac2ef66f21f66c860b0891067da5eb75664445f1))
+
 ### [0.0.38](https://github.com/espruino-tools/transpiler/compare/v0.0.37...v0.0.38) (2023-01-18)
 
 

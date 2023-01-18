@@ -48,8 +48,12 @@ export const transformer = (ast: any, options: generator_options) => {
   };
 
   const replaceReturnedExpression = (x: any) => {
+    if (x?.type === 'Identifier') {
+      return x;
+    }
+
     let esp_initialising_vars = getInstanceInitialising(ast);
-    let device_variable: string = x.callee.object.object.name;
+    let device_variable: string = x?.callee?.object?.object?.name;
 
     let device_init: any = esp_initialising_vars.find(
       (x: any) => x.name === device_variable,
@@ -109,6 +113,11 @@ export const transformer = (ast: any, options: generator_options) => {
           (y: any) => replaceExpression(y),
         );
       }
+
+      if (x.declarations[0].init?.type === 'AwaitExpression') {
+        return x;
+      }
+
       if (x.declarations[0].init?.type === 'ObjectExpression') {
         x.declarations[0].init.properties =
           x.declarations[0].init.properties.map((y: any) => {
@@ -335,6 +344,9 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
+
+    console.log(ast.body[3].body.body[0].declarations[0].init);
+
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
@@ -350,6 +362,7 @@ export const transformer = (ast: any, options: generator_options) => {
           case 'WhileStatement':
           case 'ForStatement':
           case 'ForInStatement':
+          case 'AsyncFunctionDeclaration':
           case 'DoWhileStatement': {
             return replaceLoopStatement(x);
           }
