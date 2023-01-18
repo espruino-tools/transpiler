@@ -47,14 +47,6 @@ export const transformer = (ast: any, options: generator_options) => {
     return esprima.parseScript(expression_func(...params)).body[0];
   };
 
-  // const replaceArrowExpression = (x: any) => {
-  //   console.log(x);
-  //   let esp_initialising_vars = getInstanceInitialising(ast);
-  //   let device_variable: string = x.callee.object;
-
-  //   console.log(device_variable);
-  // };
-
   const replaceReturnedExpression = (x: any) => {
     let esp_initialising_vars = getInstanceInitialising(ast);
     let device_variable: string = x.callee.object.object.name;
@@ -168,12 +160,16 @@ export const transformer = (ast: any, options: generator_options) => {
       return x;
     }
 
-    if (x?.expression.callee.object.type === 'MemberExpression') {
+    if (x?.expression?.callee?.object.type === 'MemberExpression') {
       device_variable = x.expression.callee.object.object.name;
-    } else if (x?.expression.callee.object.type === 'Identifier') {
+    } else if (x?.expression?.callee?.object?.type === 'Identifier') {
       device_variable = x.expression.callee.object.name;
     } else {
       device_variable = '';
+    }
+
+    if (x?.expression?.object?.type === 'ThisExpression') {
+      return x;
     }
 
     if (
@@ -339,7 +335,6 @@ export const transformer = (ast: any, options: generator_options) => {
 
   const getExpressions = (ast: any): any => {
     let ast_copy: any = { ...ast };
-
     ast_copy.body = ast.body
       .map((x: any) => {
         switch (x.type) {
