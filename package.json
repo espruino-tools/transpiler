@@ -1,6 +1,6 @@
 {
   "name": "@espruino-tools/transpiler",
-  "version": "0.0.42",
+  "version": "0.0.44",
   "description": "A small transpiler tool to convert custom espruino-tools code into native espruino code.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

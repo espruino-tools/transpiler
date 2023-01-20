@@ -8,5 +8,5 @@ import * as escodegen from 'escodegen';
 export const generator = (ast: any, options: generator_options) => {
   let code = ast.body.map((expr: any) => escodegen.generate(expr)).join('\n');
 
-  return code;
+  return code.replaceAll(';;', ';');
 };
