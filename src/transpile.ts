@@ -23,6 +23,6 @@ export const transpile = (
     });
     return out;
   } catch (err) {
-    throw err;
+    throw code;
   }
 };
