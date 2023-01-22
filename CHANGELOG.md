@@ -2,6 +2,108 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.46](https://github.com/espruino-tools/transpiler/compare/v0.0.45...v0.0.46) (2023-01-22)
+
+
+### Bug Fixes
+
+* made bad code output regardless ([b815418](https://github.com/espruino-tools/transpiler/commit/b815418b45f8c77199b318dfe6770ed1542a6d12))
+
+### [0.0.45](https://github.com/espruino-tools/transpiler/compare/v0.0.44...v0.0.45) (2023-01-21)
+
+
+### Bug Fixes
+
+* added extra test cases ([c39329c](https://github.com/espruino-tools/transpiler/commit/c39329c7f7fc224453bac36def169df858610721))
+
+### [0.0.44](https://github.com/espruino-tools/transpiler/compare/v0.0.43...v0.0.44) (2023-01-20)
+
+### [0.0.43](https://github.com/espruino-tools/transpiler/compare/v0.0.42...v0.0.43) (2023-01-20)
+
+
+### Bug Fixes
+
+* fixed break issue ([fbff232](https://github.com/espruino-tools/transpiler/commit/fbff232bf50a9f54fd06cfb5154b79a5227975c6))
+
+### [0.0.42](https://github.com/espruino-tools/transpiler/compare/v0.0.41...v0.0.42) (2023-01-18)
+
+
+### Bug Fixes
+
+* resolved continue issue ([58b6505](https://github.com/espruino-tools/transpiler/commit/58b6505ee2deda24cf09b1e53f2ae4d0f1970ca2))
+
+### [0.0.41](https://github.com/espruino-tools/transpiler/compare/v0.0.40...v0.0.41) (2023-01-18)
+
+
+### Bug Fixes
+
+* added try catch ([6ec8a70](https://github.com/espruino-tools/transpiler/commit/6ec8a70a4ff4956f16117eaabfbc69a5ddc27435))
+
+### [0.0.40](https://github.com/espruino-tools/transpiler/compare/v0.0.39...v0.0.40) (2023-01-18)
+
+
+### Bug Fixes
+
+* added async await ([bc90006](https://github.com/espruino-tools/transpiler/commit/bc90006cacfb5b2a7370f9486ceec3f2e473b8ff))
+
+### [0.0.39](https://github.com/espruino-tools/transpiler/compare/v0.0.38...v0.0.39) (2023-01-18)
+
+
+### Bug Fixes
+
+* added case for this ([ac2ef66](https://github.com/espruino-tools/transpiler/commit/ac2ef66f21f66c860b0891067da5eb75664445f1))
+
+### [0.0.38](https://github.com/espruino-tools/transpiler/compare/v0.0.37...v0.0.38) (2023-01-18)
+
+
+### Bug Fixes
+
+* sorted Logical expression ([ae1d387](https://github.com/espruino-tools/transpiler/commit/ae1d387b643ee8d112814b721d0a8df20cf563bd))
+
+### [0.0.37](https://github.com/espruino-tools/transpiler/compare/v0.0.36...v0.0.37) (2023-01-18)
+
+
+### Bug Fixes
+
+* fixed functions ([1ccdd2c](https://github.com/espruino-tools/transpiler/commit/1ccdd2cebfae48a53e73c597fad8909eef8db104))
+
+### [0.0.36](https://github.com/espruino-tools/transpiler/compare/v0.0.35...v0.0.36) (2023-01-18)
+
+
+### Bug Fixes
+
+* fixed if's in functions ([8f6883e](https://github.com/espruino-tools/transpiler/commit/8f6883e9cbc390f41401a3eb60cdaa9ccb4b40d9))
+
+### [0.0.35](https://github.com/espruino-tools/transpiler/compare/v0.0.34...v0.0.35) (2023-01-18)
+
+### [0.0.34](https://github.com/espruino-tools/transpiler/compare/v0.0.33...v0.0.34) (2023-01-18)
+
+
+### Bug Fixes
+
+* fixed arrow notation in object ([8e1a8f7](https://github.com/espruino-tools/transpiler/commit/8e1a8f7263d624af74f0f52a437212e0292d058e))
+
+### [0.0.33](https://github.com/espruino-tools/transpiler/compare/v0.0.32...v0.0.33) (2023-01-18)
+
+
+### Bug Fixes
+
+* further object fixes ([dd69949](https://github.com/espruino-tools/transpiler/commit/dd6994941302d1c1f6927cd057a6aa81be65ee4c))
+
+### [0.0.32](https://github.com/espruino-tools/transpiler/compare/v0.0.31...v0.0.32) (2023-01-15)
+
+
+### Bug Fixes
+
+* fixed some of arrow function issues ([63ef628](https://github.com/espruino-tools/transpiler/commit/63ef628230c8f9df9289ce4d114230aa8641612e))
+
+### [0.0.31](https://github.com/espruino-tools/transpiler/compare/v0.0.30...v0.0.31) (2023-01-15)
+
+
+### Bug Fixes
+
+* added ability to do let x = function(){} ([79413e5](https://github.com/espruino-tools/transpiler/commit/79413e57d82b29d55e1b673a50155f6226262546))
+
 ### [0.0.30](https://github.com/espruino-tools/transpiler/compare/v0.0.29...v0.0.30) (2023-01-15)
 
 

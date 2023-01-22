@@ -81,6 +81,9 @@ export const mappings = {
     dump: () => `E.dumpStr()`,
     getDeviceType: () => `process.env.BOARD`,
     getBattery: () => `E.getBattery()`,
+    setInterval: (func: any, ms: any) => `setInterval(function(){
+      ${func};
+    }, ${ms})`,
     Pin: {
       val: (pin: string) => `${pin}.read()`,
       analogOn: (pin: string, val: number) => `analogWrite(${pin},${val})`,
